@@ -66,7 +66,7 @@ ERR1 = [T("ERREUR N°1", ["Créer son", "entreprise", "*avant* le trafic."], "La
         P("LE SCÉNARIO CLASSIQUE", ["Ce que presque", "tout le monde fait"], ["Trouver une idée de produit", "Créer le logo, le site, la boutique", "Mettre en ligne", "Et attendre les clients…"]),
         T("CE QUI SE PASSE", ["*Personne*", "ne vient."], "Un site sans audience, c'est une boutique dans une rue où personne ne passe.", 140),
         T("LE PIÈGE", ["Alors on paie", "des *pubs.*"], "Et souvent, chaque client coûte plus cher que ce qu'il rapporte.", 130),
-        P("UN EXEMPLE", ["Le calcul", "qui fait *mal*"], ["1 000 vues de pub : 12 à 18 $", "2 % achètent : 50 clics pour 1 vente", "50 clics à 0,50 – 1 $ : 25 à 50 $ le client", "Ta marge sur 30 € ? Souvent moins."], "Ordres de grandeur annoncés, pubs Facebook 2026."),
+        P("UN EXEMPLE", ["Le calcul", "qui fait *mal*"], ["1 000 vues de pub : 11 à 17 €", "2 % achètent : 50 clics pour 1 vente", "50 clics à 0,45 – 0,90 € : 23 à 45 € le client", "Ta marge sur 30 € ? Souvent moins."], "Ordres de grandeur annoncés (convertis du dollar), pubs Facebook 2026."),
         V("LE MÊME CHEMIN, À L'ENDROIT", "LE RÉFLEXE", ["Produit → boutique", "→ pubs → espoir"], "CE QUI MARCHE", ["Audience → écoute", "→ produit → ventes"]),
         T("CE QU'ON FAIT ICI", ["On construit", "l'audience", "*d'abord.*"], "Ce compte est l'expérience : on vendra seulement ce que vous nous demanderez."),
         T("À TOI", ["Tu as déjà", "fait cette", "*erreur ?*"], "Raconte en commentaire. Et suis le défi pour voir la suite.")]
