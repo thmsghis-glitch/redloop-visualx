@@ -7,7 +7,11 @@ POST1 = [
  P("CE QUE TU VERRAS ICI", ["Tout, même", "les *échecs*"], ["Ce qu'on teste, et pourquoi", "Combien ça coûte, combien ça rapporte", "Ce qui marche, et ce qui rate", "Les décisions qu'on prend avec toi"]),
  T("LA MÉTHODE", ["Le trafic d'abord.", "Le produit", "*ensuite.*"], "Pas de formation à vendre. Pas de business clé en main. On construit l'audience, puis on crée ce qu'elle demande."),
  T("POINT DE DÉPART", ["Jour *zéro.*"], "0 abonné. 0 produit. 0 €. On commence par démonter les fausses promesses.", 140),
- T("SUIS L'AVENTURE", ["On le", "construit", "*ensemble ?*"], "Dis-moi en commentaire ce que tu aimerais qu'on lance. Prochain carrousel : les pièges du business clé en main."),
+ P("AVANT DE CONSTRUIRE", ["On démonte", "d'abord les *pièges*"],
+   ["Le business « clé en main »", "Les formations qui promettent des revenus",
+    "Les pronostics et signaux « gagnants »", "La vente en réseau et le recrutement",
+    "Les boutiques « IA » à revenu passif"],
+   "Premier épisode samedi : le business clé en main. Dis-moi en commentaire lequel tu as déjà croisé."),
 ]
 if __name__ == "__main__":
     render("post1", POST1, 0, "/home/claude/motion/out/p1", "/home/claude/redloop-visualx/posts")
