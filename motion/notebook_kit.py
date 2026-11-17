@@ -38,3 +38,21 @@ def ad(p, x, y, w, h, ang, kicker, big, small):
         p.write(36, 60 + 0.9 * h * 0.42, big, int(h * 0.27), CREAM, "Inter Display", True, 0, 0, 1, ctx=t)
         p.write(36, h - 36, small, 30, CREAM, "Inter", False, 0, 0, .75, ctx=t)
     p.printed_scrap(x, y, w, h, ang, f, fill=(0.09, 0.09, 0.10))
+
+def doc_card(p, x, y, w, ang, kicker, head, rows, foot=None, lab=28, val=32, rowh=60):
+    """A printed source excerpt taped on the page. rows: [(label, value)]."""
+    h = 140 + len(rows) * rowh + (50 if foot else 10)
+    vx = max(p.width(a, lab, "Inter") for a, _ in rows) + 70
+    if vx + max(p.width(b, val, "Inter Display", True) for _, b in rows) > w - 40: vx = w - 40 - max(p.width(b, val, "Inter Display", True) for _, b in rows)
+    def f(t):
+        p.write(32, 52, kicker, 22, GREY, "Inter Display", True, 0, 0, 1, ctx=t, spacing=3)
+        p.write(32, 90, head, 28, BLACK, "Inter Display", True, 0, 0, 1, ctx=t)
+        t.set_source_rgba(0, 0, 0, .15); t.rectangle(32, 110, w - 64, 2); t.fill()
+        for i, (a, b) in enumerate(rows):
+            yy = 165 + i * rowh
+            p.write(32, yy, a, lab, (0.25, 0.25, 0.28), "Inter", False, 0, 0, 1, ctx=t)
+            p.write(vx, yy, b, val, BLACK, "Inter Display", True, 0, 0, 1, ctx=t)
+        if foot: p.write(32, h - 26, foot, 20, (0.45, 0.45, 0.48), "Inter", False, 0, 0, 1, ctx=t)
+    p.printed_scrap(x, y, w, h, ang, f)
+    p.tape(x + w / 2, y + 4, 150, 42, ang * 2 - 3)
+    return y + h, vx
