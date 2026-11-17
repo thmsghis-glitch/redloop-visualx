@@ -32,4 +32,4 @@ CLE = [
  T("À TOI", ["Tu t'es déjà", "fait *avoir* ?"], "Raconte en commentaire, sans citer de nom. Ça peut éviter à quelqu'un de tomber dans le piège.", 128),
 ]
 if __name__ == "__main__":
-    render("cleenmain", CLE, 15, "/home/claude/motion/out/cle", "/home/claude/redloop-visualx/posts")
+    render("cleenmain", CLE, 4, "/home/claude/motion/out/cle", "/home/claude/redloop-visualx/posts")
