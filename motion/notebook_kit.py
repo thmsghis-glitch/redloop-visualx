@@ -6,8 +6,10 @@ GOLD = (0.88, 0.76, 0.45); CREAM = (0.97, 0.95, 0.90); GREY = (0.35, 0.35, 0.38)
 def header(p, label):
     pts = [(L + 22 + 22*math.cos(math.radians(a)), 112 + 22*math.sin(math.radians(a))) for a in range(-40, -340, -12)]
     p.stroke(pts, RED, 6); p.c.set_source_rgba(*BLACK, .9); p.c.arc(L + 22 + 29*math.cos(math.radians(-58)), 112 + 29*math.sin(math.radians(-58)), 5, 0, 6.3); p.c.fill()
-    p.write(L + 62, 128, "redloop", 40, BLACK, "Caveat", True, .6)
     w = p.width(label, 42, "Caveat", True); p.write(1080 - 60 - w, 124, label, 42, BLUE, "Caveat", True, .8, -1.5)
+
+def handle(p, txt="@redloopx"):
+    p.write(L, 1288, txt, 46, BLUE, "Caveat", True, .9, -2)
 
 def glisse(p):
     w2 = p.write(860, 1288, "glisse", 46, RED, "Caveat", True, .8, -2)

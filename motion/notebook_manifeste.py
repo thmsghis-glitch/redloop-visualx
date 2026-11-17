@@ -7,9 +7,9 @@ def save(p, i): p.render(f"{OUT}/manifeste_{i}.png", f"{J}/manifeste_{i}.jpg")
 # 1
 p = Page(31); header(p, LBL)
 y, ws, sz = title(p, [("je vais faire", BLACK), ("le point sur", BLACK), ("le business", BLACK), ("en ligne.", BLACK)], 400, 112)
-w = p.write(L, y + 190, "Sérieusement.", 104, RED, ang=-2.5); under(p, y + 225, w, twice=True)
+w = p.write(L, y + 190, "Sérieusement.", 104, RED, ang=-2.5)
 note(p, ["sans bullshit, promis."], y + 360, 58)
-glisse(p); save(p, 1)
+handle(p); glisse(p); save(p, 1)
 
 # 2
 p = Page(32); header(p, LBL)
@@ -69,8 +69,8 @@ glisse(p); save(p, 6)
 
 # 7
 p = Page(37); header(p, LBL)
-y, ws, sz = title(p, [("abonne-toi", RED), ("si tu veux", BLACK), ("y voir clair.", BLACK)], 400, 112)
+y, ws, sz = title(p, [("abonne-toi", BLACK), ("si tu veux", BLACK), ("y voir clair.", BLACK)], 400, 112)
 under(p, 400 + 30, ws[0])
 note(p, ["et dis-moi en commentaire", "quelle promesse t'a déjà", "fait rêver."], y + 180, 58)
 p.postit(600, 1030, 380, 230, 4, ["prochain épisode :", "l'état du marché"], 50)
-save(p, 7)
+handle(p); save(p, 7)

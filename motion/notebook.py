@@ -9,6 +9,7 @@ def noise(shape, sigma, seed):
     n = gaussian_filter(r, sigma); return n / (n.std() + 1e-9)
 
 class Page:
+    grid = 0.68
     def __init__(self, seed=1, full=True):
         self.seed = seed; self.rnd = random.Random(seed); self.full = full
         # page geometry: full bleed by default, else a notebook on a desk
@@ -135,7 +136,7 @@ class Page:
         g = np.zeros((H, W), np.float32); step = 34
         gx = ((X - self.px0) % step) < 1.4; gy = ((Y - self.py0) % step) < 1.4
         g[gx | gy] = 1.0; g = gaussian_filter(g, 0.5) * (0.85 + 0.15 * noise((H, W), 30, s + 5))
-        paper -= g[..., None] * np.array([0.10, 0.07, 0.03]) * 1.4
+        paper -= g[..., None] * np.array([0.10, 0.07, 0.03]) * 1.4 * getattr(self, 'grid', 1.0)
         margin = np.abs(X - (self.px0 + 150)) < 1.5
         paper[margin] = paper[margin] * 0.75 + np.array([0.85, 0.35, 0.35]) * 0.25
         # ink layer absorbed into paper
