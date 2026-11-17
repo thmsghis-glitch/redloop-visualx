@@ -123,16 +123,25 @@ def grain(i):
         _grain = [(rng.standard_normal((H // 2, W // 2)) * 255 * GRAIN).repeat(2, 0).repeat(2, 1)[..., None] for _ in range(6)]
     return _grain[i % 6]
 
-def compose(ctx, T, t, dur, draw, total, day, hud_on, wipes):
-    ctx.save(); background(ctx, T)
-    if hud_on: hud(ctx, T, total, day)
-    s = 1 + 0.03 * in_out_cubic(clamp(t / dur))           # gentle camera push-in
+OUT, IN = 0.42, 0.32
+def compose(ctx, T, t, dur, draw, total, day, hud_on, wipes, hud_in=False):
+    """Soft transitions: the scene drifts up and dissolves, the next one rises in.
+    The background and the header never move, so the cut feels continuous."""
+    background(ctx, T)
+    out_p = in_out_cubic(prog(t, dur - OUT, OUT)) if wipes[1] else 0.0
+    in_p = out_cubic(prog(t, 0, IN)) if wipes[0] else 1.0
+    if hud_on:
+        ctx.push_group(); hud(ctx, T, total, day); ctx.pop_group_to_source()
+        ctx.paint_with_alpha(in_p if hud_in else 1.0)
+    ctx.push_group()
+    s = 1 + 0.03 * in_out_cubic(clamp(t / dur))
     ctx.translate(W/2, 1000); ctx.scale(s, s); ctx.translate(-W/2, -1000)
-    draw(ctx, t, dur); ctx.restore()
-    if wipes[1]: wipe_out(ctx, t, dur)
-    if wipes[0]: wipe_in(ctx, t)
+    draw(ctx, t, dur)
+    pat = ctx.pop_group()
+    ctx.save(); ctx.translate(0, -110 * out_p + 60 * (1 - in_p)); ctx.set_source(pat)
+    ctx.paint_with_alpha((1 - out_p) * in_p); ctx.restore()
 
-def render_scene(path, dur, draw, T0, total, day, hud_on=True, wipes=(True, True), frame0=0):
+def render_scene(path, dur, draw, T0, total, day, hud_on=True, wipes=(True, True), frame0=0, hud_in=False):
     surf = cairo.ImageSurface(cairo.FORMAT_ARGB32, W, H); ctx = cairo.Context(surf)
     tmp = path[:-4] + ".part.mp4"
     p = subprocess.Popen(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "bgra", "-s", f"{W}x{H}",
@@ -142,7 +151,7 @@ def render_scene(path, dur, draw, T0, total, day, hud_on=True, wipes=(True, True
         acc = np.zeros((H, W, 4), np.float32)
         for s in range(SUB):                       # 180° shutter
             t = (f + s / SUB * 0.5) / FPS
-            compose(ctx, T0 + t, t, dur, draw, total, day, hud_on, wipes); surf.flush()
+            compose(ctx, T0 + t, t, dur, draw, total, day, hud_on, wipes, hud_in); surf.flush()
             acc += np.frombuffer(surf.get_data(), np.uint8).reshape(H, W, 4)
         acc /= SUB; acc[..., :3] += grain(frame0 + f)
         p.stdin.write(np.clip(acc, 0, 255).astype(np.uint8).tobytes())
@@ -201,7 +210,7 @@ def soundtrack(path, total, cuts, ticks=(), bpm=104, sr=44100):
     wt = np.arange(int(.55*sr))/sr; nz = rng.standard_normal(len(wt))
     for w in (40, 20, 10): nz = np.convolve(nz, np.ones(w)/w, "same")
     sw = nz * 9 * np.sin(np.pi*wt/wt[-1])**3
-    for c in cuts: add(sw, c - 0.32, 0.5)
+    for c in cuts: add(sw, c - 0.35, 0.16)
     # intro sting: riser + pop
     st = np.arange(int(.7*sr))/sr
     add(np.sin(2*np.pi*np.cumsum(220 + 900*st**2)/sr) * np.sin(np.pi*st/st[-1])**2, 0.0, 0.16)

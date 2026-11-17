@@ -106,7 +106,7 @@ if __name__ == "__main__":
         p_start = SCENES[0][1] + SCENES[1][1]
         ticks = [p_start + TYPE0 + i / CPS * 3 for i in range(len(PROMPT) // 3)]
         for i, (fn, d, h, wi, wo) in enumerate(SCENES):
-            f = f"{out}/v2_scene_{i}.mp4"; render_scene(f, d, fn, T0, TOTAL, DAY, h, (wi, wo), f0)
+            f = f"{out}/v2_scene_{i}.mp4"; render_scene(f, d, fn, T0, TOTAL, DAY, h, (wi, wo), f0, hud_in=(i == 1))
             files.append(f); T0 += d; f0 += round(d * FPS); cuts.append(T0)
         soundtrack(f"{out}/v2_music.wav", TOTAL, cuts[:-1], ticks)
         assemble(files, f"{out}/v2_music.wav", f"{out}/reel_post2_v2.mp4"); print("total", TOTAL)
