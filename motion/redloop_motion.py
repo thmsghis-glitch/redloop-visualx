@@ -103,7 +103,7 @@ def kinetic(ctx, t, lines, x, y, size, start=0.0, stagger=0.065, lh=1.08, col=IN
     for li, line in enumerate(lines):
         cx = x; ly = y + li * size * lh
         for raw in line.split(" "):
-            acc = raw.startswith("*"); word = raw.strip("*").replace("~", " ")
+            acc = raw.startswith("*"); word = raw.replace("*", "").replace("~", " ")
             style = "accent" if acc else "display"; sz = size * (1.06 if acc else 1)
             w = width(ctx, word, sz, style)
             p = prog(t, start + k * stagger, 0.6); e = out_back(p, 1.25) if p < 1 else 1
