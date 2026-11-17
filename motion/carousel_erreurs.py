@@ -28,16 +28,21 @@ def T(tag, lines, sub=None, size=118):
 
 def P(tag, title, items, note=None):
     def f(ctx):
-        sz = fit(ctx, title, 80); wrapped = [wrap(ctx, it, 40, MAXW - 110, "medium") for it in items]
-        h = 80 + len(title) * sz * 1.08 + 100 + sum(len(w) * 54 + 40 for w in wrapped) + (100 if note else 0)
+        sz = fit(ctx, title, 80); fs = 40
+        while True:
+            lh = fs * 1.35; gap = fs
+            wrapped = [wrap(ctx, it, fs, MAXW - 110, "medium") for it in items]
+            h = 80 + len(title) * sz * 1.08 + 100 + sum(len(w) * lh + gap for w in wrapped) + (100 if note else 0)
+            if h <= 880 or fs <= 30: break
+            fs -= 2; sz = min(sz, 72)
         y = max(310, 300 + (880 - h) / 2 + 30)
         caps(ctx, MX, y, tag, 30, RED); y += 50 + sz * 0.85
         kinetic(ctx, 99, title, MX, y, sz); y += (len(title) - 1) * sz * 1.08 + 120
         for i, w in enumerate(wrapped, 1):
-            disk(ctx, MX + 30, y - 14, 30, RED); n = str(i)
-            text(ctx, MX + 30 - width(ctx, n, 32, "display", 0) / 2, y - 2, n, 32, WHITE, 1, "display", 0)
-            for j, l in enumerate(w): text(ctx, MX + 90, y + j * 54, l, 40, INK, 1, "medium", 0)
-            y += len(w) * 54 + 40
+            disk(ctx, MX + 30, y - fs * 0.35, 30, RED); n = str(i)
+            text(ctx, MX + 30 - width(ctx, n, 32, "display", 0) / 2, y - fs * 0.35 + 11, n, 32, WHITE, 1, "display", 0)
+            for j, l in enumerate(w): text(ctx, MX + 90, y + j * lh, l, fs, INK, 1, "medium", 0)
+            y += len(w) * lh + gap
         if note:
             for l in wrap(ctx, note, 28, MAXW, "text"): text(ctx, MX, y + 20, l, 28, INK, .55, "text", 0); y += 40
     return f
